@@ -1,0 +1,61 @@
+@using Library.PublicModel
+@model IEnumerable<Library.Models.ViewModels.UserListViewModel>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+<div>
+    @Html.Partial("_adminPanel")
+</div>
+
+<div class="col-md-9">
+    <div class="top-buffer"></div>
+
+    <div class="card bg-primary">
+        <div class="card-header panel-head text-right" id="userListCard">لیست کاربران</div>
+        <div class="card-body bg-white">
+            <div class="btn-group float-right">
+                <a class="btn btn-primary" id="showadduser" asp-action="AddUser">افزودن کاربر</a>
+            </div>
+
+            <div></div>
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>نام و نام خانوادگی</th>
+                    <th>ایمیل</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <a class="btn btn-info" id="showedituser" asp-action="EditUser" asp-route-id="@item.id">ویرایش</a>
+
+
+                            <a class="btn btn-danger" id="showdeleteuser" asp-action="DeleteUser" asp-route-id="@item.id">حذف</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@* @await Html.PartialAsync("_Modal", new BootstrapModel *@
+@* { *@
+@*     ID = "modal-action-user", *@
+@*     Size = ModalSize.Medium *@
+@* }) *@
+
+@section Scripts
+{
+    <script src="js/modal-js/user-index.js"></script>
+    <script src="~/js/adminPanelScript.js"></script>
+}

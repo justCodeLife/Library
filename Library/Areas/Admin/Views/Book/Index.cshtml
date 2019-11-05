@@ -1,0 +1,107 @@
+@using Library.PublicModel
+@model IEnumerable<Library.Models.ViewModels.BookListViewModel>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+<div>
+    @Html.Partial("_adminPanel")
+</div>
+
+<div class="col-md-9">
+    <div class="top-buffer"></div>
+
+    <div class="card bg-primary">
+        <div class="card-header panel-head text-right" id="userListCard">لیست کتاب ها</div>
+        <div class="card-body bg-white">
+            <div class="btn-group float-right">
+                <a class="btn btn-primary" id="showbookgroup" asp-action="AddBook">افزودن کتاب</a>
+            </div>
+
+            <div></div>
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.BookName)</th>
+                    <th>@Html.DisplayNameFor(model => model.BookGroupName)</th>
+                    <th>@Html.DisplayNameFor(model => model.AuthorName)</th>
+                    <th>@Html.DisplayNameFor(model => model.BookPageCount)</th>
+                    <th>@Html.DisplayNameFor(model => model.BookImage)</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.BookName</td>
+                        <td>@item.BookGroupName</td>
+                        <td>@item.AuthorName</td>
+                        <td>@item.BookPageCount</td>
+                        <td>
+                            <img src="@ViewBag.Rootpath@item.BookImage"/>
+                        </td>
+                        <td>
+                            <a class="btn btn-info" id="showeditbook" asp-action="EditBook" asp-route-id="@item.BookID">ویرایش</a>
+                            <a class="btn btn-danger" id="showdeletebook" asp-action="DeleteBook" asp-route-id="@item.BookID">حذف</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@* @await Html.PartialAsync("_Modal", new BootstrapModel *@
+@* { *@
+@*     ID = "modal-action-book", *@
+@*     Size = ModalSize.Large *@
+@* }) *@
+
+@section Scripts
+{
+    <script src="js/modal-js/book-index.js"></script>
+    <script src="js/ckeditor/ckeditor.js"></script>
+    <script src="~/js/adminPanelScript.js"></script>
+    <script>
+            $(document).on('click',
+                '#submitdata',
+                function(evt) {
+                    evt.preventDefault();
+                    var fileupload = $("#files").get(0);
+                    var files = fileupload.files;
+                    var data = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        data.append('files', files[i]);
+                    }
+    
+                    $('input', 'select').each(function(x,y) {
+                        data.append($(y).attr('name'), $(y).val());
+                    });
+    //                var editorVal = CKEDITOR.instances['BookDescription'].getData();
+                    var editorVal = $('textarea#BookDescription').val();
+                    data.append('BookDescription', editorVal);
+    
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Action("AddEditBook", "Book", new {area = "Admin"})',
+                        contentType: false,
+                        processData: false,
+                        data: data
+                    }).done(function(res) {
+                        if (res.status === "success") {
+                            alert(res.message);
+                            window.location.href='@Url.Action("Index", "Book")';
+                        } else {
+                            $.each(res.error,function(a,b) {
+                              alert(b);
+                            });
+                        }
+                    }).fail(function(xhr, b, error) {
+                        alert(error);
+                    });
+                })
+        </script>
+}

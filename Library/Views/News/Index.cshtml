@@ -1,0 +1,64 @@
+@using Library.PublicModel
+@model IEnumerable<Library.Models.News>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+<div>
+    @Html.Partial("_adminPanel")
+</div>
+
+<div class="col-md-9">
+    <div class="top-buffer"></div>
+
+    <div class="card bg-primary">
+        <div class="card-header panel-head text-right" id="userListCard">لیست آخرین اخبار</div>
+        <div class="card-body bg-white">
+            <div class="btn-group float-right">
+                <a class="btn btn-primary" id="showNews" asp-controller="News" asp-action="AddEditNews">افزودن خبر</a>
+            </div>
+
+            <div></div>
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.newsTitle)</th>
+                    <th>@Html.DisplayNameFor(model => model.newsDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.newsImage)</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.newsTitle</td>
+                        <td>@item.newsDate</td>
+                        <td>@item.newsImage</td>
+                        <td>
+                            <a class="btn btn-info" id="showeditNews" asp-action="AddEditNews" asp-route-id="@item.NewsID">ویرایش</a>
+                            <a class="btn btn-danger" id="showdeleteNews" asp-action="DeleteNews" asp-route-id="@item.NewsID">حذف</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+@* @await Html.PartialAsync("_Modal", new BootstrapModel *@
+@*  { *@
+@*      ID = "modal-action-author", *@
+@*      Size = ModalSize.Medium *@
+@*  }) *@
+
+@section Scripts
+{
+    <script src="~/js/modal-js/author-index.js"></script>
+    <script src="~/js/adminPanelScript.js"></script>
+}

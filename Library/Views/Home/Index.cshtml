@@ -1,0 +1,28 @@
+﻿@model Library.Models.ViewModels.MultiModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<div id="main-div" class="container">
+    <div id="main-right-panel" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-right">
+        <div id="right-panel-lastbook" class="divStyle">
+            @await Html.PartialAsync("_LastNewsPartial")
+        </div>
+        <div id="right-panel-lastnews" class="divStyle">
+            @await Html.PartialAsync("_LastRegisterUser",Model.Users)
+        </div>
+    </div>
+    <div id="main-content" class="col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-left text-center">
+        @await Html.PartialAsync("_LastBook",Model.LastBook)
+        @await Html.PartialAsync("_moreViewerPartial",Model.MoreViewerBook)
+        @await Html.PartialAsync("_ScientificPartial",Model.ScientificBooks)
+    </div>
+</div>
+
+<script src="lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.owl-carousel').owlCarousel();
+    });
+</script>

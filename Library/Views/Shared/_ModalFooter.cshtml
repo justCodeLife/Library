@@ -1,0 +1,9 @@
+@model Library.PublicModel.ModalFooter
+
+<div class="modal-footer">
+    <button class="btn btn-light" type="button" onclick="history.go(-1);" id="@Model.CancelButtonID">@Model.CancelButtonText</button>
+    @if (!Model.OnlyCancelButton)
+    {
+        <button class="btn btn-success" type="submit" id="@Model.SubmitButtonID">@Model.SubmitButtonText</button>
+    }
+</div>

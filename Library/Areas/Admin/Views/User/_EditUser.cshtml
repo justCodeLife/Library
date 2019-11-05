@@ -1,0 +1,89 @@
+@using Library.PublicModel
+@model Library.Models.ViewModels.EditUserViewModel
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<form asp-controller="User" asp-action="EditUser" id="edituser" data-ajax="true" data-ajax-method="POST"
+      data-ajax-update="#edituser" data-ajax-mode="replace">
+
+    @await Html.PartialAsync("_ModalHeader", new ModalHeader
+    {
+        Heading = "ویرایش کاربر"
+    })
+    <div class="modal-body form-horizontal">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="col-lg-5 col-sm-5 control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="FirstName" class="form-control"/>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Lastname" class="col-lg-5 col-sm-5 control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Lastname" class="form-control"/>
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="col-lg-5 col-sm-5 control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Email" class="form-control"/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ApplicationRoleID" class="col-lg-5 col-sm-5 control-label"></label>
+                    <div class="col-lg-6">
+                        <select asp-for="ApplicationRoleID" class="form-control" asp-items="@Model.ApplicationRoles">
+                        </select>
+                        <span asp-validation-for="ApplicationRoleID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="gender" class="col-lg-5 col-sm-5 control-label"></label>
+                    <div class="col-lg-6">
+                        <select asp-for="gender" class="form-control">
+                            @if (Model.gender == 1)
+                            {
+                                <option value="1" selected="selected">آقا</option>
+                                <option value="2">خانم</option>
+                            }
+                            else
+                            {
+                                <option value="1">آقا</option>
+                                <option value="2" selected="selected">خانم</option>
+                            }
+                        </select>
+                        <span asp-validation-for="gender" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6">
+
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="col-lg-5 col-sm-5 control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="PhoneNumber" class="form-control"/>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="redirectURL" value="@Url.Action("Index", "User")"/>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_ModalFooter", new ModalFooter
+    {
+        SubmitButtonText = "ویرایش کاربر"
+    })
+
+</form>

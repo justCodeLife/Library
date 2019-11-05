@@ -1,0 +1,19 @@
+@model IEnumerable<Book>
+<div id="mainLastBook">
+
+    <div class="div-header">آخرین کتاب های چاپ شده</div>
+    <div class="hr"></div>
+    <div class="owl-carousel owl-theme" id="owl_lastbook">
+
+        @foreach (var item in Model)
+        {
+            <div class="img-thumbnail">
+                <a href="#">
+                    <img src="@ViewBag.imagePath@item.BookImage"/>
+                    <div class="hrunderimage"></div>
+                    <span class="">@item.BookName</span>
+                </a>
+            </div>
+        }
+    </div>
+</div>

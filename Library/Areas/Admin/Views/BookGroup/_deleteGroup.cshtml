@@ -1,0 +1,27 @@
+@model string
+@using Library.PublicModel
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<form asp-controller="BookGroup" asp-action="DeleteBookGroup">
+    @await Html.PartialAsync("_ModalHeader", new ModalHeader
+    {
+        Heading = "حذف گروه بندی"
+    })
+    
+    
+    <div class="modal-body form-horizontal text-right">
+  آیا از حذف گروه   @Model مطمن هستید ؟ 
+    </div>
+    
+    
+    
+    @await Html.PartialAsync("_ModalFooter", new ModalFooter
+    {
+        SubmitButtonText = "حذف گروه بندی"
+    })
+</form>

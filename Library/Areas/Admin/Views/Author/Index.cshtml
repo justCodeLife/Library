@@ -1,0 +1,66 @@
+@using Library.PublicModel
+@model IEnumerable<Library.Models.Author>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+<div>
+    @Html.Partial("_adminPanel")
+</div>
+
+<div class="col-md-9">
+    <div class="top-buffer"></div>
+
+    <div class="card bg-primary">
+        <div class="card-header panel-head text-right" id="userListCard">لیست نویسنده کتاب ها</div>
+        <div class="card-body bg-white">
+            <div class="btn-group float-right">
+                <a class="btn btn-primary" id="showAuthor" asp-controller="Author" asp-action="AddEditAuthor">افزودن نویسنده</a>
+            </div>
+
+            <div></div>
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.AuthorName)</th>
+                    <th>@Html.DisplayNameFor(model => model.AuthorDescription)</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.AuthorName</td>
+                        <td>@item.AuthorDescription</td>
+                        <td>
+                            <a class="btn btn-info" id="showeditAuthor" asp-action="AddEditAuthor" asp-route-id="@item.AuthorID">ویرایش</a>
+
+                            @if (!item.books.Any())
+                            {
+                                <a class="btn btn-danger" id="showdeleteAuthor" asp-action="DeleteAuthor" asp-route-id="@item.AuthorID">حذف</a>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+@* @await Html.PartialAsync("_Modal", new BootstrapModel *@
+@*  { *@
+@*      ID = "modal-action-author", *@
+@*      Size = ModalSize.Medium *@
+@*  }) *@
+
+@section Scripts
+{
+    <script src="~/js/modal-js/author-index.js"></script>
+    <script src="~/js/adminPanelScript.js"></script>
+}

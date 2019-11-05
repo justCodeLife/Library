@@ -1,0 +1,22 @@
+@model IEnumerable<ApplicationUser>
+<div id="NewsPartial">
+    <span class="div-header">آخرین افراد ثبت نام شده</span>
+    <div class="hr"></div>
+    <div>
+        @foreach (var item in Model)
+        {
+            <div>
+                @if (item.gender==1)
+                {
+                <img src="images/manicon.png"/>
+                }
+                else
+                {
+                <img src="images/woman-icon.png"/>
+                }
+                <span class="spannews">@item.FirstName @item.Lastname</span>
+            </div>
+            <div class="minihr"></div>
+        }
+    </div>
+</div>

@@ -1,0 +1,66 @@
+@using Library.PublicModel
+@model IEnumerable<Library.Models.ViewModels.ApplicationRoleViewModel>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+<div>
+    @Html.Partial("_adminPanel")
+</div>
+
+<div class="col-md-9">
+    <div class="top-buffer"></div>
+
+    <div class="card bg-primary">
+        <div class="card-header panel-head text-right" id="userListCard">لیست نقش ها</div>
+        <div class="card-body bg-white">
+            <div class="btn-group float-right">
+                <a class="btn btn-primary" id="showadduser" asp-action="AddEditRole">افزودن نقش</a>
+            </div>
+
+            <div></div>
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th class="text-center">@Html.DisplayNameFor(model => model.Name)</th>
+                    <th class="text-center">@Html.DisplayNameFor(model => model.Description)</th>
+                    <th class="text-center">@Html.DisplayNameFor(model => model.NumberOfUsers)</th>
+                    <th class="text-center">عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@item.Name</td>
+                        <td class="text-center">@item.Description</td>
+                        <td class="text-center">@item.NumberOfUsers</td>
+                        <td class="text-center">
+                            <a class="btn btn-info" id="showedituser" asp-action="AddEditRole" asp-route-id="@item.Id">ویرایش</a>
+
+                            @if (item.NumberOfUsers == 0)
+                            {
+                                <a class="btn btn-danger" id="showdeleteuser" asp-action="DeleteRole" asp-route-id="@item.Id">حذف</a>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@* @await Html.PartialAsync("_Modal") *@
+@* @await Html.PartialAsync("_Modal", new BootstrapModel *@
+@* { *@
+@*     ID = "modal-action-application-role", *@
+@*     Size = ModalSize.Medium *@
+@* }) *@
+
+@section Scripts
+{
+    <script src="js/modal-js/application-role-index.js"></script>
+    <script src="~/js/adminPanelScript.js"></script>
+}

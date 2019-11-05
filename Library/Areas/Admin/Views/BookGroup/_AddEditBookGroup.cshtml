@@ -1,0 +1,65 @@
+@using Library.PublicModel
+@model Library.Models.BookGroup
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+@Html.AntiForgeryToken()
+<form asp-controller="BookGroup" asp-action="AddEditBookGroup" id="frmaddeditbookgroup" data-ajax="true" data-ajax-method="POST"
+      data-ajax-update="#frmaddeditbookgroup" data-ajax-mode="replace">
+    @if (Model.BookGroupID == 0)
+    {
+        @await Html.PartialAsync("_ModalHeader", new ModalHeader
+        {
+            Heading = "افزودن گروه بندی جدید"
+        })
+    }
+    else
+    {
+        @await Html.PartialAsync("_ModalHeader", new ModalHeader
+        {
+            Heading = "ویرایش گروه بندی"
+        })
+    }
+    <div class="modal-body form-horizontal">
+        <div class="row">
+            <div class="form-group">
+                <label asp-for="BookGroupName" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="BookGroupName" class="form-control"/>
+                    <span asp-validation-for="BookGroupName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookGroupDescription" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="BookGroupDescription" class="form-control"/>
+                    <span asp-validation-for="BookGroupDescription" class="text-danger"></span>
+                </div>
+            </div>
+
+            <input type="hidden" name="redirectURl" value="@Url.Action("Index","BookGroup")"/>
+            
+        </div>
+    </div>
+    
+    
+    
+    @if (Model.BookGroupID == 0)
+    {
+        @await Html.PartialAsync("_ModalFooter", new ModalFooter
+        {
+            SubmitButtonText = "افزودن گروه بندی"
+        })
+    }
+    else
+    {
+        @await Html.PartialAsync("_ModalFooter", new ModalFooter
+        {
+            SubmitButtonText = "ویرایش گروه بندی"
+        })
+    }
+
+</form>

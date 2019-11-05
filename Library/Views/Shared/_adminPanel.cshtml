@@ -1,0 +1,30 @@
+<div class="menu col-md-3">
+    <ul class="text-center">
+        <li class="dashboard">داشبورد</li>
+        <li class="main-li first">
+            <a href="#">مدیریت سیستم</a>
+            <ul>
+                <li>
+                    <a asp-controller="User" asp-action="Index">مدیریت کاربران</a>
+                    <a asp-controller="ApplicationRole" asp-action="Index">مدیریت نقش ها</a>
+                    <a asp-controller="Author" asp-action="Index">مدیریت نویسندگان</a>
+                    <a asp-controller="BookGroup" asp-action="Index">مدیریت گروه بندی ها</a>
+                    <a asp-controller="Book" asp-action="Index">مدیریت کتاب ها</a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li class="main-li">
+            <a href="#">مدیریت اخبار ها</a>
+            <ul>
+                <li>
+                    <a asp-controller="News" asp-action="Index">مدیریت اخبار</a>
+                </li>
+            </ul>
+        </li>
+        <li class="main-li">
+            <a href="#">مدیریت مجلات</a>
+        </li>
+    </ul>
+</div>

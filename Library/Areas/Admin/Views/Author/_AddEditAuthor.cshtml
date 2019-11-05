@@ -1,0 +1,60 @@
+@using Library.PublicModel
+@model Library.Models.Author
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,Library
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<form asp-controller="Author" asp-action="AddEditAuthor" id="frmaddeditauthor" data-ajax="true" data-ajax-method="POST"
+      data-ajax-update="#frmaddeditauthor" data-ajax-mode="replace">
+    @if (Model.AuthorID == 0)
+    {
+        @await Html.PartialAsync("_ModalHeader", new ModalHeader
+        {
+            Heading = "افزودن نویسنده جدید"
+        })
+    }
+    else
+    {
+        @await Html.PartialAsync("_ModalHeader", new ModalHeader
+        {
+            Heading = "ویرایش نویسنده"
+        })
+    }
+    <div class="modal-body form-horizontal">
+        <div class="row">
+            <div class="form-group">
+                <label asp-for="AuthorName" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="AuthorName" class="form-control"/>
+                    <span asp-validation-for="AuthorName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthorDescription" class="col-lg-3 col-sm-3 control-label"></label>
+                <div class="col-lg-6">
+                    <input asp-for="AuthorDescription" class="form-control"/>
+                    <span asp-validation-for="AuthorDescription" class="text-danger"></span>
+                </div>
+            </div>
+            <input type="hidden" name="redirectURl" value="@Url.Action("Index","Author")"/>
+
+        </div>
+    </div>
+    @if (Model.AuthorID == 0)
+    {
+        @await Html.PartialAsync("_ModalFooter", new ModalFooter
+        {
+            SubmitButtonText = "افزودن نویسنده"
+        })
+    }
+    else
+    {
+        @await Html.PartialAsync("_ModalFooter", new ModalFooter
+        {
+            SubmitButtonText = "ویرایش نویسنده"
+        })
+    }
+
+</form>
